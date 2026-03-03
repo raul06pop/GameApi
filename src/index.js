@@ -1,6 +1,6 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { dirname, join } from 'path';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swagger.js';
@@ -21,6 +21,11 @@ app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
   next();
 });
+
+// Static files
+app.use('/frontend',express.static(join(__dirname, '../static')));
+app.use('/favicon.ico', express.static(join(__dirname, '../static/favicon.ico')));
+
 
 // Public routes (no authentication required)
 app.use('/auth', authRoutes);
